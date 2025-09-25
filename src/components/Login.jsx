@@ -17,10 +17,13 @@ const Login = () => {
       <h1 className='text-3xl font-bold my-4'>
         {isSignInForm ? "Sign In": "Sign Up"}
       </h1>
+       { !isSignInForm && (<input type='text' placeholder='Full Name' className='p-4 my-4 bg-gray-700 w-full rounded-lg' />)}
         <input type="text" placeholder='Email or phone number' className='p-4 my-4 bg-gray-600 w-full rounded-lg'  />
+        
          <input type='password' placeholder='Password' className='p-4 my-4 bg-gray-700 w-full rounded-lg' />
          <button className="p-4 my-4 bg-red-700 w-full">{isSignInForm ? "Sign In": "Sign Up"}</button>
-         <p className='cursor-pointer'onClick={toogleSignInform}>{isSignInForm ? "New to Netflx? Sign Up Now": "Already registerd ? Sign In Now. "}</p>
+         <p className='cursor-pointer'onClick={toogleSignInform}>
+         {isSignInForm ? "New to Netflx? Sign Up Now": "Already registerd ? Sign In Now. "}</p>
       </form>
     </div>
   )
