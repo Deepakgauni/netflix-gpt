@@ -1,6 +1,22 @@
 import React from 'react'
+import {auth} from '../utils/firebase'
+import {signOut} from 'firebase/auth'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
+  const navigate = useNavigate();
+  const user = useSelector(store=>store)
+const handleSignOut=()=>{
+  
+signOut(auth).then(() => {
+    navigate("/")
+}).catch((error) => {
+   navigate("/error")
+});
+}
+
+
   return (
     <>
       <div className='absolute w-screen px-8 py-2 bg-gradient-to-b from to-black z-10 flex justify-between'>
@@ -9,7 +25,7 @@ const Header = () => {
       
       <div  className='flex '>
       <img className='w-10 h-10' src='https://wallpapers.com/images/high/netflix-profile-pictures-1000-x-1000-88wkdmjrorckekha.webp' />
-      <button >(sign Out)</button>
+      <button onClick={handleSignOut}>(sign Out)</button>
       </div>
       </div>
     </>

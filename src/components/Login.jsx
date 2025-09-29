@@ -4,29 +4,46 @@ import {checkValidData} from '../utils/validate'
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from '../utils/firebase'
 import { useNavigate } from 'react-router-dom';
+import { updateProfile } from "firebase/auth";
+import { useDispatch } from 'react-redux';
+import {addUser} from '../utils/userSlice'
 
 const Login = () => {
   const[isSignInForm, setIsSignInForm]= useState(true);
   const [errorMessage, setErrorMessage]= useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const email= useRef(null);
    const password= useRef(null);
+   const name= useRef(null)
 
   const handleButtonClick= ()=>{
      const message= checkValidData(email.current.value, password.current.value);
      setErrorMessage(message);
-     if(message)return;
+     if(message) return;
 
      // sign in or sign up logic
      if(!isSignInForm){
-        // sign up logic
+      
      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
      .then((userCredential) => {
-    // Signed up 
+
     const user = userCredential.user;
-    console.log(user);
-    navigate("/browse")
+    updateProfile(user, {
+  displayName: name.current.value, 
+  photoURL: ""
+}).then(() => {
+     const {uid, email, displayName, photoURL}= auth.currentUser;
+      dispatch(addUser({uid:uid, email:email, displayName:displayName, photoURL:photoURL}));
+  navigate("/browse")
+  // ...
+}).catch((error) => {
+setErrorMessage(error.message);
+  // ...
+});
+  
+
     // ...
   })
   .catch((error) => {
