@@ -2,16 +2,16 @@ import React, { useState,useRef } from 'react'
 import Header from './Header'
 import {checkValidData} from '../utils/validate'
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
-import {auth} from '../utils/firebase'
-import { useNavigate } from 'react-router-dom';
+import {auth} from '../utils/firebase';
 import { updateProfile } from "firebase/auth";
 import { useDispatch } from 'react-redux';
-import {addUser} from '../utils/userSlice'
+import {addUser} from '../utils/userSlice';
+import { USER_AVATAR } from '../utils/constants';
 
 const Login = () => {
   const[isSignInForm, setIsSignInForm]= useState(true);
   const [errorMessage, setErrorMessage]= useState(null);
-  const navigate = useNavigate();
+  
   const dispatch = useDispatch();
 
  const name= useRef(null)
@@ -32,13 +32,13 @@ const Login = () => {
 
     const user = userCredential.user;
     updateProfile(user, {
-    // displayName: name.current.value, 
-    // photoURL: "https://avatars.githubusercontent.com/u/161502912?v=4"
+     displayName: name.current.value, 
+    photoURL: USER_AVATAR
 })
 .then(() => {
     const {uid, email, displayName, photoURL}= auth.currentUser;
     dispatch(addUser({uid:uid, email:email, displayName:displayName, photoURL:photoURL}));
-      navigate("/browse")
+    
   // ...
 }).catch((error) => {
 setErrorMessage(error.message);
@@ -63,7 +63,7 @@ setErrorMessage(error.message);
     // Signed in 
     const user = userCredential.user;
     console.log(user);
-    navigate("/browse")
+    
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -89,7 +89,7 @@ setErrorMessage(error.message);
       <h1 className='text-3xl font-bold my-4'>
         {isSignInForm ? "Sign In": "Sign Up"}
       </h1>
-       { !isSignInForm && (<input type='text' placeholder='Full Name' className='p-4 my-4 bg-gray-700 w-full rounded-lg' />)}
+       { !isSignInForm && (<input ref={name} type='text' placeholder='Full Name' className='p-4 my-4 bg-gray-700 w-full rounded-lg' />)}
         <input ref={email} type="text" placeholder='Email or phone number' className='p-4 my-4 bg-gray-600 w-full rounded-lg'  />
         
          <input ref={password} type='password' placeholder='Password' className='p-4 my-4 bg-gray-700 w-full rounded-lg' />
