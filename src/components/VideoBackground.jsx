@@ -9,17 +9,19 @@ const getMovieVideos = async()=>{
     const json = await data.json();
     console.log(json)
 
-    const trailer = json.results.filter(video=> video.type == "Trailer");
+    const filterData = json.results.filter((video)=> video.type == "Trailer");
+    const trailer = filterData.length ? filterData[0] : json.results[0]; 
     console.log(trailer);
 };
  useEffect(()=>{
     getMovieVideos();
  },[])
 
-    return 
+    return (
         <div>
-
+         <iframe width="560" height="315" src="https://www.youtube.com/embed/M7QhCm98eIQ?si=mcPoPMQe60ySOx0X" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+    )
     
 }
 
