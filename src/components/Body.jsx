@@ -5,8 +5,6 @@ import { createBrowserRouter } from 'react-router-dom'
 import { RouterProvider } from 'react-router-dom'
 import { onAuthStateChanged } from "firebase/auth";
 import {auth} from '../utils/firebase';
-import { addUser, removeUser } from "../utils/userSlice";
-import { useEffect } from "react";
 
 const Body = () => {
 
