@@ -62,7 +62,7 @@ setErrorMessage(error.message);
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    console.log(user);
+    
     
   })
   .catch((error) => {
