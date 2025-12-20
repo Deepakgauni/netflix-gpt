@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useEffect } from 'react'
 import { addUser, removeUser } from '../utils/userSlice'
-import { LOGO } from '../utils/constants'
+import { LOGO, USER_AVATAR } from '../utils/constants'
 import { toggleGptSearchView } from '../utils/gptSlice'
 
 const Header = () => {
@@ -50,7 +50,7 @@ return ()=>unsubscribe
       
      { user && (<div  className='flex p-2'>
      <button className='py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg ' onClick={handleGptSearchClick}>GPT Search</button>
-      <img className='w-10 h-10' src={user?.photoURL} />
+      <img className='w-10 h-10' src={user?. photoURL|| USER_AVATAR} />
       <button onClick={handleSignOut} className='font-bold text-white'>(sign Out)</button>
       </div>
       )}
