@@ -8,11 +8,13 @@ import { useEffect } from 'react'
 import { addUser, removeUser } from '../utils/userSlice'
 import { LOGO, SUPPORTED_LANGUAGES, USER_AVATAR } from '../utils/constants'
 import { toggleGptSearchView } from '../utils/gptSlice'
+import { changeLanguage } from '../utils/configSlice'
 
 const Header = () => {
   const dispatch= useDispatch()
   const navigate = useNavigate();
   const user = useSelector(store=>store.user)
+  const showGptSearch= useSelector((store)=>store.gpt.showGptSearch)
 const handleSignOut=()=>{
   
 signOut(auth).then(() => {
@@ -41,6 +43,10 @@ return ()=>unsubscribe
      dispatch(toggleGptSearchView())
 
  }
+ 
+ const handleLanguageChange =(e)=>{
+  dispatch( changeLanguage(e.target.value))
+ }
 
   return (
     <>
@@ -49,11 +55,16 @@ return ()=>unsubscribe
           src={LOGO}  alt='netfflx logo' />
       
      { user && (<div  className='flex p-2'>
-     <select className='p-2 m-2 bg-gray-700 text-white rounded-lg'>
-     {SUPPORTED_LANGUAGES.map((lang)=> (<option key={lang.indentifier} value={lang.name}>{lang.name}</option>))}
-     </select>
-     <button className='py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg ' onClick={handleGptSearchClick}>GPT Search</button>
+     {showGptSearch &&(
+     <select className='p-2 m-2 bg-gray-900 text-white rounded-lg' onChange={handleLanguageChange}>
+     {SUPPORTED_LANGUAGES.map((lang)=> (<option key={lang.indentifier} value={lang.indentifier}>{lang.name}</option>))}
+     </select>)}
+
+     <button className='py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg ' onClick={handleGptSearchClick}>{showGptSearch ?"HomePage":"GPT Search"}
+     
+     </button>
       <img className='w-10 h-10' src={user?. photoURL|| USER_AVATAR} />
+
       <button onClick={handleSignOut} className='font-bold text-white'>(sign Out)</button>
       </div>
       )}

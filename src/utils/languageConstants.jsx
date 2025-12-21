@@ -11,7 +11,7 @@
     spanish:{
          search: "Buscar",
          gptSearchPlaceholder: "¿Qué te gustaría ver hoy?"
-    }
+    },
  }
 
  export default lang;
