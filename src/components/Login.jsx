@@ -85,7 +85,7 @@ setErrorMessage(error.message);
         <img src={BG_URL} 
        alt="Netflix background" />
       </div>
-      <form   onSubmit={(e) => e.preventDefault()} className='w-3/12 absolute p-12 my-36 mx-auto right-0 left-0 text-white rounded-lg bg-black/70'>
+      <form   onSubmit={(e) => e.preventDefault()} className='w-full md:w-3/12 absolute p-12 my-36 mx-auto right-0 left-0 text-white rounded-lg bg-black/70'>
       <h1 className='text-3xl font-bold my-4'>
         {isSignInForm ? "Sign In": "Sign Up"}
       </h1>
